@@ -14,7 +14,10 @@ class SFSCollectionVC: UIViewController {
         layout.minimumLineSpacing = 30
         layout.minimumInteritemSpacing = 30
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(SFSCollectionCell.self, forCellWithReuseIdentifier: SFSCollectionCell.reuseIdentifier)
+        collectionView.register(SFSCollectionCell.self, forCellWithReuseIdentifier: SFSCollectionCell.reuseIdentifier) //The collection view has to know what type of cell is being passed;
+        //Moves from collection view initiliazition (initializes the type of cell)
+        //Goes to the data source to get configured with content
+        //Goes to display, and is reused when no longer needed
         return collectionView
     }()
 
@@ -30,8 +33,8 @@ class SFSCollectionVC: UIViewController {
         collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = false
         
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView.dataSource = self //This assigns SFSCollection to be the dataSource in order for collectionView to be able to ask for items
+        collectionView.delegate = self //Both data source and delegate are part of the delegate design, but just have different names
     }
 }
 
@@ -47,6 +50,23 @@ extension SFSCollectionVC: UICollectionViewDataSource {
         return cell
     }
 }
+
+
+
+
+/*
+ Lesson Notes:
+ 1. collectionview's data source is assigned to collectionviwe or self
+ 2. Delegetate flow layout; implements optional behavior
+ 3. 'Size for item at' function sets the cell size or the default could be used
+ 4. 'Did select item at' function is the callback for when a cell is selected; the delegate gives the callback functionality to the cell
+ 5.
+ 
+ 
+ 
+ 
+ 
+ */
 
 extension SFSCollectionVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -25,7 +25,7 @@ class StartVC: UIViewController {
         // == UIColor.darkGray
         label.textColor = .darkGray
         
-        label.text = "Meet the Member"
+        label.text = "Meet the Members!"
         
         // == NSTextAlignment(expected type).center
         label.textAlignment = .center
@@ -41,9 +41,8 @@ class StartVC: UIViewController {
     
     private let startButton: UIButton = {
         let button = UIButton()
-        
-        button.setTitle("Start", for: .normal)
-        
+        button.setTitle("Click To Play!", for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.setTitleColor(.blue, for: .normal)
         
         // MARK: STEP 1: UIButton Customization
@@ -58,16 +57,30 @@ class StartVC: UIViewController {
         
         // MARK: >> Your Code Here <<
         
+        button.backgroundColor = .cyan
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.layer.borderWidth = 3
         return button
     }()
+    
+    //ADD LOGO
+//    let imageView: UIImageView = {
+//        let imgview = UIImageView()
+//        imgview.translatesAutoresizingMaskIntoConstraints = false
+//        imgview.contentMode = .scaleAspectFit
+//        imgview.image = UIImage(systemName: "MDB_LOGO")
+//
+//        return imgview
+//    }()
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white // == UIColor(expected type).white
         
         // MARK: STEP 2: Subviews and Constraints
+        
         // Action Items:
         // - Read the example on adding subviews and creating constraints
         //   for `welcomeLabel`
@@ -84,7 +97,13 @@ class StartVC: UIViewController {
         // -----------------------------
         // - Constraints can only be created in the same view hierarchy.
         //   So you have to add the view subview before creating constraints.
+        //view.addSubview(imageView) ADD LOGO
         view.addSubview(welcomeLabel)
+        view.addSubview(startButton)
+        
+        
+       
+        setUpConstraints() //CONSTRAINTS ADDED HERE
         
         
         // And add the constraints
@@ -98,24 +117,24 @@ class StartVC: UIViewController {
         // |
         // y
         //
-        NSLayoutConstraint.activate([
+        //NSLayoutConstraint.activate([
             // You can use the view.topAnchor. But it's different, why?
             // https://developer.apple.com/documentation/uikit/uiview/positioning_content_relative_to_the_safe_area
-            welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            //welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             
             // For your understanding, here's what it's saying:
             //     welcomeLabel.leadingAnchor = view.leadingAnchor + 50
-            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            //welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             
             //     welcomeLabel.trailingAnchor = view.trailingAnchor - 50
-            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)
-        ])
+            //welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50)
+        //])
         
-        // MARK: >> Your Code Here <<
+        // MARK: >> Your Code Here << ADDED CONSTRAINTS IN ANOTHER FUNC
         
-        NSLayoutConstraint.activate([
+        //NSLayoutConstraint.activate([
             // MARK: >> Your Code Here <<
-        ])
+        //])
         
         
         // MARK: STEP 3: Adding Callbacks
@@ -137,6 +156,19 @@ class StartVC: UIViewController {
         //   need it here.
         startButton.addTarget(self, action: #selector(didTapStart(_:)), for: .touchUpInside)
     }
+    
+    private func setUpConstraints() {
+        welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
+        welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
+        welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
+        
+        startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 75).isActive = true
+        startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -75).isActive = true
+        startButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 400).isActive = true
+        startButton.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+    }
+    
     
     @objc func didTapStart(_ sender: UIButton) {
         // Initialize an instance of MainVC

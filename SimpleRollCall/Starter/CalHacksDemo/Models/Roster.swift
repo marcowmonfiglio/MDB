@@ -10,7 +10,7 @@ import Foundation
 
 class Roster {
     
-    static let main = Roster()
+    static let main = Roster() //singleton: creating an instance of the class so that the instance variables can be accessed via Roster.main
     
     struct Result: Codable {
         let presentList: [String]
@@ -24,6 +24,7 @@ class Roster {
         init(withRoster roster: Roster) {
             self.presentList = roster.namesPresent
             self.absentList = roster.namesAbsent
+            
         }
     }
     
