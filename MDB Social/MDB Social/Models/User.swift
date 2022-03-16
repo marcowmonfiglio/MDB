@@ -1,6 +1,6 @@
 //
 //  SOCUser.swift
-//  MDB Social No Starter
+//  MDB Social
 //
 //  Created by Michael Lin on 10/9/21.
 //
@@ -8,10 +8,10 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-typealias SOCUserID = String
+typealias UserID = String
 
-struct SOCUser: Codable {
-    @DocumentID var uid: SOCUserID?
+struct User: Codable {
+    @DocumentID var uid: UserID?
     
     var username: String
     
@@ -19,5 +19,5 @@ struct SOCUser: Codable {
     
     var fullname: String
     
-    var savedEvents: [SOCEventID]
+    var savedEvents: [EventID]
 }

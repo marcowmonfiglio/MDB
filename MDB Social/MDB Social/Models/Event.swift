@@ -1,21 +1,19 @@
 //
 //  SOCEvent.swift
-//  MDB Social No Starter
+//  MDB Social
 //
 //  Created by Michael Lin on 10/9/21.
 //
 
 import Foundation
-
-import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-typealias SOCEventID = String
+typealias EventID = String
 
-struct SOCEvent: Codable {
+struct Event: Codable {
     
-    @DocumentID var id: SOCEventID? = UUID().uuidString
+    @DocumentID var id: EventID? = UUID().uuidString
     
     var name: String
     
@@ -25,9 +23,9 @@ struct SOCEvent: Codable {
     
     var startTimeStamp: Timestamp
     
-    var creator: SOCUserID
+    var creator: UserID
     
-    var rsvpUsers: [SOCUserID]
+    var rsvpUsers: [UserID]
     
     var startDate: Date {
         get {

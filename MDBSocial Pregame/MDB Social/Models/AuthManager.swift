@@ -1,6 +1,6 @@
 //
 //  AuthManager.swift
-//  MDB Social No Starter
+//  MDB Social
 //
 //  Created by Michael Lin on 10/9/21.
 //
@@ -9,9 +9,9 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-class SOCAuthManager {
+class AuthManager {
     
-    static let shared = SOCAuthManager()
+    static let shared = AuthManager()
     
     let auth = Auth.auth()
     
@@ -27,7 +27,7 @@ class SOCAuthManager {
     
     let db = Firestore.firestore()
     
-    var currentUser: SOCUser?
+    var currentUser: User?
     
     private var userListener: ListenerRegistration?
     
@@ -38,7 +38,7 @@ class SOCAuthManager {
     }
     
     func signIn(withEmail email: String, password: String,
-                completion: ((Result<SOCUser, SignInErrors>)->Void)?) {
+                completion: ((Result<User, SignInErrors>)->Void)?) {
         
         /* TODO: Hackshop */
     }
@@ -58,7 +58,7 @@ class SOCAuthManager {
     }
     
     private func linkUser(withuid uid: String,
-                          completion: ((Result<SOCUser, SignInErrors>)->Void)?) {
+                          completion: ((Result<User, SignInErrors>)->Void)?) {
         
         /* TODO: Hackshop */
     }

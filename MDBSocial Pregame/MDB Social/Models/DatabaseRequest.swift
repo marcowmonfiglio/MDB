@@ -1,6 +1,6 @@
 //
 //  SOCDBRequest.swift
-//  MDB Social No Starter
+//  MDB Social
 //
 //  Created by Michael Lin on 10/9/21.
 //
@@ -8,17 +8,17 @@
 import Foundation
 import FirebaseFirestore
 
-class FIRDatabaseRequest {
+class DatabaseRequest {
     
-    static let shared = FIRDatabaseRequest()
+    static let shared = DatabaseRequest()
     
     let db = Firestore.firestore()
     
-    func setUser(_ user: SOCUser, completion: (()->Void)?) {
+    func setUser(_ user: User, completion: (()->Void)?) {
         /* TODO: Hackshop */
     }
     
-    func setEvent(_ event: SOCEvent, completion: (()->Void)?) {
+    func setEvent(_ event: Event, completion: (()->Void)?) {
         /* TODO: Hackshop */
     }
     

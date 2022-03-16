@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A1CFD72271CE670000C2945 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A1CFD74271CE670000C2945 /* Auth.storyboard */; };
 		1ADC5846271249AB0067693B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADC5845271249AB0067693B /* AppDelegate.swift */; };
 		1ADC5848271249AB0067693B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADC5847271249AB0067693B /* SceneDelegate.swift */; };
 		1ADC584D271249AB0067693B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1ADC584B271249AB0067693B /* Main.storyboard */; };
@@ -31,10 +32,10 @@
 		1ADC5882271255DC0067693B /* UIViewController+HideKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADC587F271255DC0067693B /* UIViewController+HideKeyboard.swift */; };
 		1AFB4D86271C22FD006621E9 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB4D85271C22FD006621E9 /* FeedVC.swift */; };
 		1AFB4D88271C2327006621E9 /* FeedNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AFB4D87271C2327006621E9 /* FeedNavigationVC.swift */; };
-		1AFB4D8A271C23D9006621E9 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AFB4D89271C23D9006621E9 /* Auth.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A1CFD73271CE670000C2945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Auth.storyboard; sourceTree = "<group>"; };
 		1ADC5842271249AB0067693B /* MDB Social.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MDB Social.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1ADC5845271249AB0067693B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1ADC5847271249AB0067693B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,7 +57,6 @@
 		1ADC587F271255DC0067693B /* UIViewController+HideKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+HideKeyboard.swift"; sourceTree = "<group>"; };
 		1AFB4D85271C22FD006621E9 /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		1AFB4D87271C2327006621E9 /* FeedNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedNavigationVC.swift; sourceTree = "<group>"; };
-		1AFB4D89271C23D9006621E9 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 			children = (
 				1ADC584B271249AB0067693B /* Main.storyboard */,
 				1ADC5850271249AE0067693B /* LaunchScreen.storyboard */,
-				1AFB4D89271C23D9006621E9 /* Auth.storyboard */,
+				1A1CFD74271CE670000C2945 /* Auth.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -238,7 +238,7 @@
 			files = (
 				1ADC5852271249AE0067693B /* LaunchScreen.storyboard in Resources */,
 				1ADC585B27124B200067693B /* GoogleService-Info.plist in Resources */,
-				1AFB4D8A271C23D9006621E9 /* Auth.storyboard in Resources */,
+				1A1CFD72271CE670000C2945 /* Auth.storyboard in Resources */,
 				1ADC584F271249AE0067693B /* Assets.xcassets in Resources */,
 				1ADC584D271249AB0067693B /* Main.storyboard in Resources */,
 			);
@@ -272,6 +272,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		1A1CFD74271CE670000C2945 /* Auth.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A1CFD73271CE670000C2945 /* Base */,
+			);
+			name = Auth.storyboard;
+			sourceTree = "<group>";
+		};
 		1ADC584B271249AB0067693B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -415,7 +423,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "MDB Social No Starter/Info.plist";
+				INFOPLIST_FILE = "MDB Social/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "MDB Social";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -443,7 +451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "MDB Social No Starter/Info.plist";
+				INFOPLIST_FILE = "MDB Social/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "MDB Social";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
