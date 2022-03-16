@@ -16,6 +16,7 @@ import Foundation
         Poison, Fighting, Psychic, Fire, Rock, Flying, Steel, Ghost, Water
 */
 
+
 enum PokeType: String, CaseIterable {
     case Bug
     case Grass
@@ -102,7 +103,7 @@ class Pokemon: Decodable {
         let imageContainer = try valueContainer.nestedContainer(keyedBy: ImageKeys.self, forKey: .images)
         
         self.imageUrl = URL(string: try imageContainer.decode(String.self, forKey: .normal))
-        self.imageUrlLarge = URL(string: try imageContainer.decode(String.self, forKey: .large))
-        self.imageUrlAnimated = URL(string: try imageContainer.decode(String.self, forKey: .animated))
+               self.imageUrlLarge = URL(string: try imageContainer.decode(String.self, forKey: .large))
+               self.imageUrlAnimated = URL(string: try imageContainer.decode(String.self, forKey: .animated))
     }
 }

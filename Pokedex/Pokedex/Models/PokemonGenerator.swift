@@ -11,6 +11,7 @@ import Foundation
 
 class PokemonGenerator {
     
+    
     static let shared = PokemonGenerator()
     
     func getPokemonArray() -> [Pokemon] {
