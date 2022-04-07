@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestore
+import FirebaseFirestore //Calls firebase firestore to add additional data that is not authentication data
 
 class DatabaseRequest {
     

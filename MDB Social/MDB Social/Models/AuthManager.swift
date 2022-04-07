@@ -23,7 +23,11 @@ class AuthManager {
         case errorFetchingUserDoc
         case errorDecodingUserDoc
         case unspecified
+        case emailAlreadyInUse
+        case weakPassword
+        case unknown
     }
+    
     
     let db = Firestore.firestore()
     
@@ -66,7 +70,38 @@ class AuthManager {
         }
     }
     
-    /* TODO: Firebase sign up handler, add user to firestore */
+    /* TODO: Firebase sign up handler, add user to firestore DONE */
+    
+    func addUser(name: String, username: String, email: String, password: String, completion: ((Result<User, SignInErrors>)->Void)?) {
+        auth.createUser(withEmail: email, password: password) {[weak self] authResult, error in
+            if let error = error {
+                let nsError = error as NSError
+                let errorCode = FirebaseAuth.AuthErrorCode(rawValue: nsError.code)
+                
+                switch errorCode {
+                case .emailAlreadyInUse: // ************ THIS CASE IS NOT EXECUTING *****************
+                    //auth.fetchSignInMethods(forEmail: email) POSSIBLE EXAMPLE?
+                    
+                    completion?(.failure(.emailAlreadyInUse))
+                case .weakPassword:
+                    completion?(.failure(.weakPassword))
+                default:
+                    completion?(.failure(.internalError))
+                }
+                return
+            }
+            guard let authResult = authResult else {
+                completion?(.failure(.internalError))
+                return
+            }
+            
+            let u: User = User(uid: authResult.user.uid, username: username, email: email, fullname: name, savedEvents: [])
+            
+            DatabaseRequest.shared.setUser(u, completion: nil)
+            
+            self?.linkUser(withuid: authResult.user.uid, completion: completion)
+          }
+    }
     
     func isSignedIn() -> Bool {
         return auth.currentUser != nil

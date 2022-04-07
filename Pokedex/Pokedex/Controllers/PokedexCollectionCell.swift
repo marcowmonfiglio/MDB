@@ -13,6 +13,8 @@ class PokedexCollectionCell: UICollectionViewCell {
     
     static let reuseIdentifier: String = String(describing: PokedexCollectionCell.self)
     
+    
+    
     var onePokemon: Pokemon? {
         didSet {
             if let url = onePokemon?.imageUrl {
@@ -29,15 +31,12 @@ class PokedexCollectionCell: UICollectionViewCell {
                 task.resume()
             } else {
                 self.imageView.image = #imageLiteral(resourceName: "pokeball")
-            }
-            titleView.text = onePokemon?.name
-            IDView.text = String(describing: onePokemon!.id)
+        }
+        titleView.text = onePokemon?.name
+        IDView.text = String(describing: onePokemon!.id)
             
         }
     }
-    
-    //private var classType: String
-    //private var typeColor: UIColor
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
@@ -75,7 +74,7 @@ class PokedexCollectionCell: UICollectionViewCell {
         backgroundColor = #colorLiteral(red: 0.09803921569, green: 0.1058823529, blue: 0.1098039216, alpha: 1)
         contentView.layer.borderColor = #colorLiteral(red: 0.06274510175, green: 0, blue: 0.1921568662, alpha: 1)
         contentView.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        
+        contentView.layer.borderWidth = 1
         contentView.addSubview(imageView)
         contentView.addSubview(titleView)
         contentView.addSubview(IDView)
@@ -88,7 +87,7 @@ class PokedexCollectionCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalToConstant: 60),
             titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            titleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5)
         ])
     }
     

@@ -125,7 +125,7 @@ class SigninVC: UIViewController {
         
         signinButton.layer.cornerRadius = signinButtonHeight / 2
         
-        signinButton.addTarget(self, action: #selector(didTapSignIn(_:)), for: .touchUpInside)
+        //signinButton.addTarget(self, action: #selector(didTapSignIn(_:)), for: .touchUpInside)
         
         view.addSubview(signUpActionLabel)
         NSLayoutConstraint.activate([
@@ -146,7 +146,35 @@ class SigninVC: UIViewController {
             return
         }
         
-        /* TODO: Hackshop */
+        AuthManager.shared.signIn(withEmail: email, password: password) { result in //Include a defualt case on top of the screenshot
+            switch result {
+            case .success(let user): //result of the error or user from the sign in function in auth manager
+                guard let window = self.view.window else { return }
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                window.rootViewController = vc
+                let options: UIView.AnimationOptions = .transitionCrossDissolve
+                let duration: TimeInterval = 0.3
+                UIView.transition(with: window, duration: duration, options: options, animations: {}, completion: nil)
+            case .failure(let error):
+                switch error {
+                case .userNotFound:
+                    self.showErrorBanner(withTitle: "User not found", subtitle: "Please check your email address")
+                case .wrongPassword:
+                    self.showErrorBanner(withTitle: "Wrong Password", subtitle: "Try another password")
+                case .invalidEmail:
+                    self.showErrorBanner(withTitle: "Invalid Credentials", subtitle: "Please check your email address")
+                case .internalError:
+                    self.showErrorBanner(withTitle: "Internal error")
+                case .errorFetchingUserDoc:
+                    self.showErrorBanner(withTitle: "Error fetching user")
+                case .errorDecodingUserDoc:
+                    self.showErrorBanner(withTitle: "Error decoding user doc")
+                case .unspecified:
+                    self.showErrorBanner(withTitle: "Unknown error occurred")
+                }
+            }
+            
+        }
     }
     
     @objc private func didTapSignUp(_ sender: UIButton) {

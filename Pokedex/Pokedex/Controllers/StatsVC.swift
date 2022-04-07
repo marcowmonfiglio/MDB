@@ -26,8 +26,6 @@ class StatsVC: UIViewController {
     //imageURL (try animated or large)
     let imageView: UIImageView = {
         let view = UIImageView()
-        //view.layer.borderWidth = 5
-        //view.layer.cornerRadius = 20
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
         
@@ -65,7 +63,7 @@ class StatsVC: UIViewController {
         }
     }()
     
-    let ReturnButton: UIButton = {
+    let returnButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(.black, for: .normal) //.blue
         button.setTitle("Back", for: .normal)
@@ -82,12 +80,12 @@ class StatsVC: UIViewController {
         addSubViews()
         setUpConstraints()
         addInfo()
-        ReturnButton.addTarget(self, action: #selector(tapReturnHandler(_:sender:)), for: .touchUpInside)
+        returnButton.addTarget(self, action: #selector(tapReturnHandler(_:sender:)), for: .touchUpInside)
         
     }
     
     private func addSubViews() {
-        view.addSubview(ReturnButton)
+        view.addSubview(returnButton)
         view.addSubview(nameHeader)
         view.addSubview(imageView)
         
@@ -102,35 +100,35 @@ class StatsVC: UIViewController {
         nameHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 75).isActive = true
         
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: nameHeader.bottomAnchor, constant: 25).isActive = true
+        imageView.topAnchor.constraint(equalTo: nameHeader.bottomAnchor).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
      
         for i in 0..<8 {
             labels[i].backgroundColor = typeColor["\(poke.types[0])"]
             if i == 0 {
-            labels[i].topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15).isActive = true
+            labels[i].topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5).isActive = true
             } else {
                 labels[i].topAnchor.constraint(equalTo: labels[i-1].bottomAnchor, constant: 5).isActive = true
             }
-            labels[i].heightAnchor.constraint(equalToConstant: 40).isActive = true
+            labels[i].heightAnchor.constraint(equalToConstant: 35).isActive = true
             labels[i].trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
             labels[i].leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
         }
         for i in 8..<16 {
             if i == 8 {
-                labels[i].topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 15).isActive = true
+                labels[i].topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5).isActive = true
             } else {
                 labels[i].topAnchor.constraint(equalTo: labels[i-1].bottomAnchor, constant: 5).isActive = true
             }
-            labels[i].heightAnchor.constraint(equalToConstant: 40).isActive = true
+            labels[i].heightAnchor.constraint(equalToConstant: 35).isActive = true
             labels[i].trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35).isActive = true
             labels[i].leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
         }
         
-        ReturnButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        ReturnButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-        ReturnButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        ReturnButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(25)).isActive = true
+        returnButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        returnButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        returnButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        returnButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(25)).isActive = true
         
     }
     
@@ -178,7 +176,6 @@ class StatsVC: UIViewController {
         
         let vc = PokedexVC()
         
-        vc.modalPresentationStyle = .fullScreen
         
         dismiss(animated: true)
     }

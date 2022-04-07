@@ -159,7 +159,8 @@ class SigninVC: UIViewController {
             switch result {
             case .success:
                 guard let window = self.view.window else { return }
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                //let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+                let vc = FeedNavigationVC(rootViewController: FeedVC())
                 window.rootViewController = vc
                 let options: UIView.AnimationOptions = .transitionCrossDissolve
                 let duration: TimeInterval = 0.3
@@ -181,10 +182,11 @@ class SigninVC: UIViewController {
     }
     
     @objc private func didTapSignUp(_ sender: UIButton) {
-        
+        let vc = SignUpVC()
+        present(vc, animated: true, completion: nil)
     }
     
-    private func showErrorBanner(withTitle title: String, subtitle: String? = nil) {
+    /*private*/ func showErrorBanner(withTitle title: String, subtitle: String? = nil) {
         showBanner(withStyle: .warning, title: title, subtitle: subtitle)
     }
     
@@ -204,3 +206,47 @@ class SigninVC: UIViewController {
                     shadowBlurRadius: 10)
     }
 }
+
+import UIKit
+
+//DEMO: Use command K to open the keyboard
+
+/*
+ Define bottomInsetConstraint
+
+class Demo {
+    
+    bottomInsetConstraint = view.bottomAnchor.constraint(greaterThanOrEqualTo: signinButton.bottomAnchor, constant: contentEdgeInset.bottom).isActive = true
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(self, name: didRecieveKeyboard, object: <#T##Any?#>)
+    
+                                           
+    
+    
+    
+    @objc func didReceiveKeyboardNotification(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+        guard let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        guard let duration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue else {
+            return
+        }
+        let curveRaw = (userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue //no guard needed since we provide a default value with ??
+        let animateCurve = UIView.AnimationOptions(rawValue: curveRaw)
+        
+        if endFrame.origin.y /*top left corner of the frame*/ >= UIScreen.main.bounds.height {
+            bottomInsetConstraint.constant = contentEdgeInset.bottom
+        } else {
+            bottomInsetConstraint.constant = endFrame.height + 10
+        }
+        
+        UIView.animate(withDuration: duration, delay: 0, options: animateCurve, animations: {self.view.layoutIfNeeded()}, completion: nil)
+    }
+}
+
+*/
+
+

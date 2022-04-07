@@ -187,6 +187,6 @@ class StatsVC: UIViewController {
         //   your custom init for `StatsVC`
         // - Update the call site here on line 139
         
-        present(vc, animated: true, completion: nil)
+        dismiss(animated: true)
     }
 }

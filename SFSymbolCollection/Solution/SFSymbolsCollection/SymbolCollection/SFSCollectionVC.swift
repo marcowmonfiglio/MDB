@@ -62,10 +62,6 @@ extension SFSCollectionVC: UICollectionViewDataSource {
  4. 'Did select item at' function is the callback for when a cell is selected; the delegate gives the callback functionality to the cell
  5.
  
- 
- 
- 
- 
  */
 
 extension SFSCollectionVC: UICollectionViewDelegateFlowLayout {

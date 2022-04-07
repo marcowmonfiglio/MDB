@@ -9,11 +9,15 @@ import UIKit
 
 class PokedexVC: UIViewController {
     
+    var layout = 0
+    
     var filter: Bool = false
     
     var filteredPokemon: [Pokemon] = []
     
     let pokemons = PokemonGenerator.shared.getPokemonArray()
+    
+    var filteredType: [String] = [] //CHECK FOR EMPTY LIST FOR NO FILTER APPLIED ******************************
     
     
     private let welcomeHeader: UILabel = {
@@ -25,6 +29,45 @@ class PokedexVC: UIViewController {
         label.font = .systemFont(ofSize: 45, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private let rowButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.isSpringLoaded = true
+        button.setTitle("R", for: .normal)
+        button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        button.tag = 1
+        button.layer.cornerRadius = 7
+        button.layer.borderWidth = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let gridButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.isSpringLoaded = true
+        button.setTitle("G", for: .normal)
+        button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        button.tag = 0
+        button.layer.cornerRadius = 7
+        button.layer.borderWidth = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let typeFilterButton: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("Type", for: .normal)
+        button.backgroundColor = #colorLiteral(red: 0.8851273656, green: 0.8851273656, blue: 0.8851273656, alpha: 1)
+        button.isSpringLoaded = true
+        button.tintColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        button.layer.cornerRadius = 7
+        button.layer.borderWidth = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private let searchButton: UIButton = {
@@ -40,18 +83,6 @@ class PokedexVC: UIViewController {
         return button
     }()
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 30
-        layout.minimumInteritemSpacing = 30
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(PokedexCollectionCell.self, forCellWithReuseIdentifier: PokedexCollectionCell.reuseIdentifier) //The collection view has to know what type of cell is being passed;
-        //Moves from collection view initiliazition (initializes the type of cell)
-        //Goes to the data source to get configured with content
-        //Goes to display, and is reused when no longer needed
-        return collectionView
-    }()
-    
     private var searchBar: UISearchBar = {
         let search = UISearchBar()
         search.tintColor = .darkGray
@@ -65,6 +96,22 @@ class PokedexVC: UIViewController {
         return search
     }()
     
+    
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = -1
+        layout.minimumInteritemSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(PokedexCollectionCell.self, forCellWithReuseIdentifier: PokedexCollectionCell.reuseIdentifier) //The collection view has to know what type of cell is being passed;
+        //Moves from collection view initiliazition (initializes the type of cell)
+        //Goes to the data source to get configured with content
+        //Goes to display, and is reused when no longer needed
+        return collectionView
+    }()
+    
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -73,12 +120,12 @@ class PokedexVC: UIViewController {
         setUpConstraints()
         initCallbacks()
         setUpCollectionView()
+        checkButtons()
         
     }
     
     func setUpCollectionView() {
-        collectionView.frame = view.bounds.inset(by: UIEdgeInsets(top: 275, left: 30, bottom: 30, right: 30))
-        //collectionView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        collectionView.frame = view.bounds.inset(by: UIEdgeInsets(top: 275, left: 45, bottom: 30, right: 45))
         collectionView.backgroundColor = .clear
         
         collectionView.allowsSelection = true
@@ -94,11 +141,17 @@ class PokedexVC: UIViewController {
         view.addSubview(welcomeHeader)
         view.addSubview(collectionView)
         view.addSubview(searchButton)
-        //view.addSubview(logo)
+        view.addSubview(rowButton)
+        view.addSubview(gridButton)
+        view.addSubview(typeFilterButton)
+    
     }
     
     func initCallbacks() {
         searchButton.addTarget(self, action: #selector(searchCallback(_:)), for: .touchUpInside) /*Old syntax*/
+        typeFilterButton.addTarget(self, action: #selector(typeCallback(_:)), for: .touchUpInside)
+        rowButton.addTarget(self, action: #selector(layoutCallback(_:)), for: .touchUpInside)
+        gridButton.addTarget(self, action: #selector(layoutCallback(_:)), for: .touchUpInside)
     }
     
     func setUpConstraints() {
@@ -111,11 +164,47 @@ class PokedexVC: UIViewController {
         searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50).isActive = true
         searchBar.topAnchor.constraint(equalTo: welcomeHeader.bottomAnchor, constant: 25).isActive = true
         searchBar.bottomAnchor.constraint(equalTo: welcomeHeader.bottomAnchor, constant: 75).isActive = true
-        
+    
         searchButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5).isActive = true
-        searchButton.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor).isActive = true
-        searchButton.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor).isActive = true
+        searchButton.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: 50).isActive = true
+        searchButton.trailingAnchor.constraint(equalTo: searchBar.trailingAnchor, constant: -50).isActive = true
         
+        rowButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5).isActive = true
+        rowButton.leadingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: -30).isActive = true
+        rowButton.trailingAnchor.constraint(equalTo: searchBar.leadingAnchor, constant: 5).isActive = true
+        
+        gridButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5).isActive = true
+        gridButton.leadingAnchor.constraint(equalTo: rowButton.trailingAnchor, constant: -2).isActive = true
+        gridButton.trailingAnchor.constraint(equalTo: rowButton.trailingAnchor, constant: 35).isActive = true
+        
+        typeFilterButton.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 5).isActive = true
+        typeFilterButton.leadingAnchor.constraint(equalTo: searchButton.trailingAnchor, constant: 10).isActive = true
+        typeFilterButton.trailingAnchor.constraint(equalTo: searchButton.trailingAnchor, constant: 60).isActive = true
+        
+    }
+    
+    func layoutIsGrid() -> Bool {
+        if layout == 0 {
+            return true
+        } else {
+            
+            return false
+        }
+    }
+    
+    func checkButtons() {
+        if rowButton.tag == layout {
+            rowButton.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        } else {
+            rowButton.backgroundColor = #colorLiteral(red: 0.8851273656, green: 0.8851273656, blue: 0.8851273656, alpha: 1)
+        }
+        
+        if gridButton.tag == layout {
+            gridButton.backgroundColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
+        } else {
+            gridButton.backgroundColor = #colorLiteral(red: 0.8851273656, green: 0.8851273656, blue: 0.8851273656, alpha: 1)
+        }
+        collectionView.reloadData()
     }
     
     @objc func searchCallback (_ sender: UIButton) { //********************************************
@@ -128,6 +217,20 @@ class PokedexVC: UIViewController {
         }
         collectionView.reloadData()
     }
+    
+    @objc func layoutCallback (_ sender: UIButton) {
+        if sender.tag != layout  {
+            layout = sender.tag
+        }
+        checkButtons()
+        //layoutIsGrid()
+    }
+    
+    @objc func typeCallback (_ sender: UIButton) {
+        let vc = TypeFilterVC()
+        present(vc, animated: true, completion: nil)
+    }
+    
     
 } //END OF CLASS POKEDEX VC
 
@@ -155,7 +258,12 @@ extension PokedexVC: UICollectionViewDataSource { //****************************
 
 extension PokedexVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 160, height: 80)
+        if layoutIsGrid() {
+            return CGSize(width: 150, height: 80)
+        } else {
+            return CGSize(width: 300, height: 40)
+        }
+         // ****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************
     }
     
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {

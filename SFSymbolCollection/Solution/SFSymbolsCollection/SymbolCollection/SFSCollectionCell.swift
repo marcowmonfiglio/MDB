@@ -12,6 +12,7 @@ class SFSCollectionCell: UICollectionViewCell {
     static let reuseIdentifier: String = String(describing: SFSCollectionCell.self)
     
     var symbol: SFSymbol? {
+        
         didSet {
             imageView.image = symbol?.image
             titleView.text = symbol?.name
