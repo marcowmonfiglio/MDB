@@ -12,21 +12,22 @@ class FeedVC: UIViewController {
     var eventList: [Event] = []
     
     private let signOutButton: UIButton = {
-        let btn = UIButton(frame: CGRect(x: 150, y: 100, width: 100, height: 100))
+        let btn = UIButton(frame: CGRect(x: 20, y: 100, width: 350, height:50))
         btn.backgroundColor = .red
         btn.setImage(UIImage(systemName: "xmark"), for: .normal)
         let config = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 30, weight: .medium))
         btn.setPreferredSymbolConfiguration(config, forImageIn: .normal)
         btn.tintColor = .white
-        btn.layer.cornerRadius = 50
+        btn.layer.cornerRadius = 25
         
         return btn
     }()
     
     private let titleView: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 50)
+        label.text = "MDB SOCIALS"
         label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 30)
         label.textAlignment = .center
         label.numberOfLines = 2
         
@@ -44,6 +45,7 @@ class FeedVC: UIViewController {
     }()
     
     override func viewDidLoad() {
+        
         
         addSubviews()
         setUpConstraints()
@@ -66,7 +68,7 @@ class FeedVC: UIViewController {
     }
     
     func addSubviews() {
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         view.addSubview(collectionView)
         view.addSubview(signOutButton)
         view.addSubview(titleView)
@@ -74,21 +76,18 @@ class FeedVC: UIViewController {
     }
     
     func setUpConstraints() {
-        collectionView.frame = view.bounds.inset(by: UIEdgeInsets(top: 200, left: 30, bottom: 0, right: 30))
+        collectionView.frame = view.bounds.inset(by: UIEdgeInsets(top: 210, left: 30, bottom: 0, right: 30))
         NSLayoutConstraint.activate([
-        signOutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-        //signOutButton.widthAnchor.constraint(equalToConstant: 100),
-        //signOutButton.heightAnchor.constraint(equalToConstant: 100),
-        signOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        
-        titleView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-        titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+        titleView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160),
+        titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
         signOutButton.addTarget(self, action: #selector(didTapSignOut(_:)), for: .touchUpInside)
         
     }
     
     @objc func didTapSignOut(_ sender: UIButton) {
+        print("SELECTED")
         AuthManager.shared.signOut { [weak self] in
             guard let self = self else { return }
             guard let window = self.view.window else { return }
@@ -135,5 +134,6 @@ extension FeedVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let event = eventList[indexPath.item]
         print("Selected \(String(describing: event.creator))")
+        
     }
 }
